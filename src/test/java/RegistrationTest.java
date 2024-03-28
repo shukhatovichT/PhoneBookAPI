@@ -16,12 +16,11 @@ public class RegistrationTest {
     @Test
     public void registrationPositive() throws IOException {
 
-        // Create a RegistrationRequestModel object with the desired username and password for registration.
+        // Create a RegistrationRequestModel object with the username and password for registration.
         AuthenticationRequestModel requestModel = AuthenticationRequestModel
                 .username(PropertiesReader.getProperty("newUserEmail"))
                 .password(PropertiesReader.getProperty("newUserPassword"));
 
-        // Create a RequestBody object containing the registration data in JSON format.
         RequestBody requestBody = RequestBody
                 .create(TestConfig.gson.toJson(requestModel),
                         TestConfig.JSON);
@@ -32,18 +31,16 @@ public class RegistrationTest {
                 .post(requestBody)
                 .build();
 
-        // Execute the HTTP request.
         Response response = TestConfig.client.newCall(request).execute();
         System.out.println("Response code: "+response.code());
 
-        // Check if the response is successful (status code 2xx).
+        // Check if the response is successful
         if (response.isSuccessful()) {
-            // Deserialize the response body to get the token.
             AuthenticationResponseModel responseModel =
                     TestConfig.gson.fromJson(response.body().string(),
                             AuthenticationResponseModel.class);
 
-            // Write the token to properties file or store it as needed.
+            // Write the token to properties file
             PropertiesWriter.writeProperties("tokenRegistration", responseModel.getToken());
 
             // Assert that the response contains a token.
