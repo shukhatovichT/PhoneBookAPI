@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class PropertiesReader {
 
-    private static final String PROPERTIES_FILE_PATH = "src/main/resources/resources.properties";
+    private static final String PROPERTIES_FILE_PATH = "src/main/resources/appdata.properties";
 
     public static String getProperty(String key) {
         Properties properties = new Properties();
